@@ -41,7 +41,7 @@ def answer(msg: types.Message):
 @bot.message_handler(commands=['start', 'help'])
 def answer(msg: types.Message):
     bot.send_message(chat_id=msg.from_user.id, text=f'Здравствуйте. Вы открыли телефонный справочник!')
-    bot.send_message(chat_id=msg.from_user.id, text=f'1. Добавить новую запись \n 2. Вывод записей на экран \n 3. Скопировать данные в файл?\n 4. Сохранить в нашу базу данных?\n 5. Поиск записи')
+    bot.send_message(chat_id=msg.from_user.id, text=f'1. Добавить новую запись \n 2. Вывод записей на экран \n 3. Скопировать данные в файл?\n 4. Сохранить в нашу базу данных?\n 5. Поиск записи\т 6. Сохранить в нашу базу данных все контакты')
 
 @bot.message_handler()
 def answer(msg: types.Message):
@@ -68,6 +68,10 @@ def answer(msg: types.Message):
     if n == '5':
         bot.register_next_step_handler(msg, answer5)
         bot.send_message(chat_id=msg.from_user.id, text=f'Введите имя для поиска') 
+    if n == '6':
+        bot.register_next_step_handler(msg, answer4)
+        bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла')
+    
 
 @bot.message_handler()
 def answer1(msg: types.Message):
@@ -121,7 +125,7 @@ def answer5(msg: types.Message):
     se_name = searchname[1:]
     firstchar = searchname[0]
     searchname = firstchar.upper() + se_name
-    myfile = open('phonebook.csv', 'r+')
+    myfile = open('phonebook.csv', 'r+', encoding='utf-8')
     filecontents = myfile.readlines()
 
     found = False
@@ -133,69 +137,30 @@ def answer5(msg: types.Message):
             break
     if found == False:
         bot.send_message(chat_id=msg.from_user.id, text=f'Запрашиваемый Вами контакт не найден')
+
+def answer6(msg: types.Message):
+    ss = list(msg.text.split())
+    num = ss[0]
+    path = ss[1]
+    
+    if num == '1':
+        arr1 = import_data.copy_cont1(path)
+        import_data.write_csv(arr1)
+    if num == '2':
+        import_data.copy_cont_json1(path)
          
 
 
            
 
-    # elif n == '5':
-    #     user_search = input('Введите имя для поиска?: ')
-    #     searchcontact.searchcontact(user_search)
-    #     enter = input('Нажмите Enter для завершения')   
-
-        # first_name = answer1(msg)
-        # last_name = answer2(msg)
-        # phone_number = answer3(msg)
-        # description = answer4(msg)
-        # new_list = [first_name, last_name, phone_number, description]
-        # print(new_list)
-        # save_to_csv(new_list)
-        
+    
        
     
 
-
-# Создаем новый контакт
-        # def new_contact():
-        #     new_list = []
-        #     first_name = input_firstname(name1)
-        #     last_name = input_lastname(name2)
-        #     phone_number = input_number(num)
-        #     description = input_description(des)
-        #     new_list = [first_name, last_name, phone_number, description]
-        #     save_to_csv(new_list)
-        #     #print('Данные успешно сохранены')
+    
 
 
-# Вводим имя
-    # def input_firstname(n):
-    #     first = n
-    #     fi_name = first[1:]
-    #     firstchar = first[0]
-    #     return firstchar.upper() + fi_name
-
-
-    # # Вводим фимилию
-    # def input_lastname(n):
-        
-    #     first = n
-    #     la_name = first[1:]
-    #     firstchar = first[0]
-    #     return firstchar.upper() + la_name
-
-
-    # #  Вводим описание
-    # def input_description(n):
-        
-    #     first = n
-    #     pa_name = first[1:]
-    #     firstchar = first[0]
-    #     return firstchar.upper() + pa_name
-
-    # def input_number(n):
-        
-    #     phone_number = n
-    #     return phone_number
+    
 
 
 # Сохраняем в csv
