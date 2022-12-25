@@ -106,10 +106,10 @@ def answer4(msg: types.Message):
     num = ss[0]
     path = ss[1]
     namee = ss[2]
-    if num == 1:
+    if num == '1':
         arr1 = import_data.copy_cont(path, namee)
         import_data.write_csv(arr1)
-    if num == 2:
+    if num == '2':
         import_data.copy_cont_json(path, namee)
         
 
