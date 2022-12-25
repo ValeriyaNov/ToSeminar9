@@ -1,6 +1,7 @@
 import csv
 import export_data
 import import_data
+import searchcontact
 from telebot import TeleBot, types
 TOKEN = '5615159193:AAFAm4a5YKA3w2EhtlvwS9qkDEzL0jqalUo'
  
@@ -63,7 +64,10 @@ def answer(msg: types.Message):
     if n == '4':
         bot.register_next_step_handler(msg, answer4)
         bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла и через пробел имя человека')
-        # save_to_csv(new_list)
+
+    if n == '5':
+        bot.register_next_step_handler(msg, answer5)
+        bot.send_message(chat_id=msg.from_user.id, text=f'Введите имя для поиска') 
 
 @bot.message_handler()
 def answer1(msg: types.Message):
@@ -111,7 +115,28 @@ def answer4(msg: types.Message):
         import_data.write_csv(arr1)
     if num == '2':
         import_data.copy_cont_json(path, namee)
-        
+
+def answer5(msg: types.Message):
+    searchname = msg.text
+    se_name = searchname[1:]
+    firstchar = searchname[0]
+    searchname = firstchar.upper() + se_name
+    myfile = open('phonebook.csv', 'r+')
+    filecontents = myfile.readlines()
+
+    found = False
+    for line in filecontents:
+        if searchname in line:
+            bot.send_message(chat_id=msg.from_user.id, text=f'Результат {line}')
+            
+            found = True
+            break
+    if found == False:
+        bot.send_message(chat_id=msg.from_user.id, text=f'Запрашиваемый Вами контакт не найден')
+         
+
+
+           
 
     # elif n == '5':
     #     user_search = input('Введите имя для поиска?: ')
