@@ -62,7 +62,7 @@ def answer(msg: types.Message):
     
     if n == '4':
         bot.register_next_step_handler(msg, answer4)
-        bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла')
+        bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла и через пробел имя человека')
         # save_to_csv(new_list)
 
 @bot.message_handler()
@@ -105,11 +105,12 @@ def answer4(msg: types.Message):
     ss = list(msg.text.split())
     num = ss[0]
     path = ss[1]
+    namee = ss[2]
     if num == 1:
-        arr1 = import_data.copy_cont(path)
+        arr1 = import_data.copy_cont(path, namee)
         import_data.write_csv(arr1)
     if num == 2:
-        import_data.copy_cont_json(path)
+        import_data.copy_cont_json(path, namee)
         
 
     # elif n == '5':
