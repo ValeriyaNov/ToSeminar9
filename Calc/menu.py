@@ -45,7 +45,7 @@ def send_welcome(message):
     elif text == '+++':
         bot.register_next_step_handler(message, sum_complex_numbers)
         bot.reply_to(message, m.MESSAGE_1)
-    elif text == '---':
+    elif text == '- - -':
         bot.register_next_step_handler(message, subtraction_complex_numbers)
         bot.reply_to(message, m.MESSAGE_1)
     else:
