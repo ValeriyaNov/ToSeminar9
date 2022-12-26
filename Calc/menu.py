@@ -3,19 +3,9 @@ from telebot import TeleBot
 import main as m
 import datetime
 os.chdir(os.path.dirname(__file__))
-'''
-Прикрутить бота к задачам с предыдущего семинара:
-    2.1 Создать калькулятор для работы с рациональными и комплексными числами, 
-    организовать меню, добавив в неё систему логирования
-python -m pip install pytelegrambotapi
-'''
 
-
-token = '5615159193:AAFAm4a5YKA3w2EhtlvwS9qkDEzL0jqalUo'
+token = ''
 bot = TeleBot(token)
-#TOKEN = '' 
-#bot = TeleBot(TOKEN)
-
 
 @bot.message_handler(commands=m.USER_COMMANDS)
 def send_welcome(message):
