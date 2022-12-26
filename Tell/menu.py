@@ -2,7 +2,7 @@ import csv
 import export_data
 import import_data
 from telebot import TeleBot, types
-TOKEN = '5615159193:AAFAm4a5YKA3w2EhtlvwS9qkDEzL0jqalUo'
+TOKEN = ''
  
 bot = TeleBot(TOKEN)
 import os
