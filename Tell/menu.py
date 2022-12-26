@@ -16,7 +16,7 @@ def answer(msg: types.Message):
 
 @bot.message_handler()
 def answer(msg: types.Message):
-    #dct[msg.from_user.id] = []
+    
     n = msg.text
     
     if n == '1':
