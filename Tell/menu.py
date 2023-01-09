@@ -34,7 +34,7 @@ def answer(msg: types.Message):
     
     if n == '4':
         bot.register_next_step_handler(msg, answer4)
-        bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла и через пробел имя человека и пришлите файл')
+        bot.send_message(chat_id=msg.from_user.id, text=f'Пришлите файл')
 
     if n == '5':
         bot.register_next_step_handler(msg, answer5)
@@ -140,7 +140,7 @@ def answer11(msg: types.Message):
     filename = msg.document.file_name
     with open(filename, 'wb') as file:
         file.write(bot.download_file(bot.get_file(msg.document.file_id).file_path))
-    bot.send_message(chat_id=msg.from_user.id, text='док сохранен')
+    bot.send_message(chat_id=msg.from_user.id, text='Данные сохранены')
 
     if 'csv' in filename:
         arr1 = import_data.copy_cont1(filename)
@@ -148,7 +148,20 @@ def answer11(msg: types.Message):
     if 'json' in filename:
         import_data.copy_cont_json1(filename)
 
-    
+@bot.message_handler(content_types=['document'])
+def answer12(msg: types.Message):
+    filename = msg.document.file_name
+    with open(filename, 'wb') as file:
+        file.write(bot.download_file(bot.get_file(msg.document.file_id).file_path))
+    bot.send_message(chat_id=msg.from_user.id, text='Данные сохранены')
+    bot.register_next_step_handler(msg, answer4)
+    bot.send_message(chat_id=msg.from_user.id, text='Напишите имя файла, через пробел напишите номер формата экспорта данных: 1 - xml, 2 - json')
+
+    # if 'csv' in filename:
+    #     arr1 = import_data.copy_cont1(filename)
+    #     import_data.write_csv(arr1)
+    # if 'json' in filename:
+    #     import_data.copy_cont_json1(filename)   
     
 
 bot.polling()
