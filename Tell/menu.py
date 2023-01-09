@@ -2,7 +2,7 @@ import csv
 import export_data
 import import_data
 from telebot import TeleBot, types
-TOKEN = ''
+TOKEN = '5615159193:AAFAm4a5YKA3w2EhtlvwS9qkDEzL0jqalUo'
  
 bot = TeleBot(TOKEN)
 import os
@@ -34,15 +34,18 @@ def answer(msg: types.Message):
     
     if n == '4':
         bot.register_next_step_handler(msg, answer4)
-        bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла и через пробел имя человека')
+        bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла и через пробел имя человека и пришлите файл')
 
     if n == '5':
         bot.register_next_step_handler(msg, answer5)
         bot.send_message(chat_id=msg.from_user.id, text=f'Введите имя для поиска') 
     if n == '6':
-        bot.register_next_step_handler(msg, answer6)
-        bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла')
-    
+        bot.register_next_step_handler(msg, answer11)
+        bot.send_message(chat_id=msg.from_user.id, text=f'Пришлите файл, с которого необходимо скопировать данные')
+        #bot.register_next_step_handler(msg, answer6)
+        #bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла')
+
+
 
 @bot.message_handler()
 def answer1(msg: types.Message):
@@ -75,9 +78,11 @@ def answer3(msg: types.Message):
     num_exp = b[1]
     if num_exp == '1':
         export_data.export_to_xml(file_name_expott)
+        bot.send_document(chat_id=msg.from_user.id, document=open(f'{file_name_expott}.xml', 'rb'))
         
     elif num_exp == '2':
         export_data.csv_to_json(file_name_expott)
+        bot.send_document(chat_id=msg.from_user.id, document=open(f'{file_name_expott}.json', 'rb'))
             
 
 def answer4(msg: types.Message):
@@ -130,6 +135,21 @@ def save_to_csv(new_contacts, file_name = 'phonebook.csv'):
                 bd.write(f'{new_contacts[i]}')
         bd.write('\n')
 
+@bot.message_handler(content_types=['document'])
+def answer11(msg: types.Message):
+    filename = msg.document.file_name
+    with open(filename, 'wb') as file:
+        file.write(bot.download_file(bot.get_file(msg.document.file_id).file_path))
+    bot.send_message(chat_id=msg.from_user.id, text='док сохранен')
+
+    if 'csv' in filename:
+        arr1 = import_data.copy_cont1(filename)
+        import_data.write_csv(arr1)
+    if 'json' in filename:
+        import_data.copy_cont_json1(filename)
+
+    
+    
 
 bot.polling()
 
