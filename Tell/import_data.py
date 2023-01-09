@@ -106,4 +106,5 @@ def write_csv(data):
             csv_fil = csv.writer(fil, delimiter=';', lineterminator="\n")
             
             csv_fil.writerow(data[i])
-            print('Данные успешно записаны')
+            
+    print('Данные успешно записаны')
