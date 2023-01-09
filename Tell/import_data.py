@@ -104,5 +104,6 @@ def write_csv(data):
     for i in range(len(data)):
         with open('phonebook.csv', "a", newline='', encoding='utf-8') as fil:
             csv_fil = csv.writer(fil, delimiter=';', lineterminator="\n")
+            
             csv_fil.writerow(data[i])
             print('Данные успешно записаны')
