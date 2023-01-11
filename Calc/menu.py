@@ -61,7 +61,7 @@ def logir(message):
     
     with codecs.open('log', 'a', encoding='utf-8') as file:
         file.writelines(
-            f'\n Chat {message.chat.id} User: {message.from_user.first_name} Data: {dtn} Message: {message.text}')
+            f'\n Chat {message.chat.id} User: {message.from_user.first_name} Data: {dtn} Message: {message.text} Answer: {message.text}')
 
 
 
@@ -145,16 +145,17 @@ def sum_complex_numbers(msg):
     else:
         res = f'{jsum}j+{sum1}'
         
-    
+    answer = res
 
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат сложения {res}')
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат сложения {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2) 
 
 
 
 def subtraction(msg):
     a, b = map(float, msg.text.split())
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат вычитания {a - b}')
+    answer = a - b
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат вычитания {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)
     
 
@@ -224,8 +225,8 @@ def subtraction_complex_numbers(msg):
         res = f'{jsum}j{sum1}'
     else:
         res = f'{jsum}j+{sum1}'
-
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат вычитания {res}')
+    answer = res
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат вычитания {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)  
 
     
