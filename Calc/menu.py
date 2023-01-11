@@ -1,10 +1,11 @@
 import os
-from telebot import TeleBot
+from telebot import TeleBot, types
 import main as m
 import datetime
+import codecs
 os.chdir(os.path.dirname(__file__))
 
-token = ''
+token = '5615159193:AAFAm4a5YKA3w2EhtlvwS9qkDEzL0jqalUo'
 bot = TeleBot(token)
 
 @bot.message_handler(commands=m.USER_COMMANDS)
@@ -44,22 +45,36 @@ def send_welcome(message):
         bot.reply_to(message, m.MESSAGE_1)
     elif text == '///':
         bot.register_next_step_handler(message, dev_complex_numbers)
-        bot.reply_to(message, m.MESSAGE_1)    
+        bot.reply_to(message, m.MESSAGE_1)  
+
+    elif text == 'log':
+        bot.register_next_step_handler(message, logir_print)
+        bot.reply_to(message, m.MESSAGE_3)
+
     else:
         bot.reply_to(message, text='Вы прислали: ' + text +
                         ', а должны были арифметическое действие')
-    
+    logir(message)
+
+def logir(message):
     dtn = datetime.datetime.now()
-    botlogfile = open('log_calculator.txt', 'a', encoding='utf-8')
-    print(dtn.strftime("%d-%m-%Y %H:%M"), 'Пользователь ' + 
-            message.from_user.first_name, message.from_user.id, 
-            'операция: ' + text, file=botlogfile)
-    botlogfile.close()
+    
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(
+            f'\n Chat {message.chat.id} User: {message.from_user.first_name} Data: {dtn} Message: {message.text}')
+
+
+
+def logir_print(msg):
+        
+    bot.send_document(chat_id=msg.from_user.id, document=open(f'log', 'rb'))
+             
 
 
 def sum(msg):
     a, b = map(float, msg.text.split())
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат сложения {a + b}')
+    answer = a + b
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат сложения {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2) 
 
 
@@ -286,8 +301,8 @@ def mult_complex_numbers(msg):
         ccc = y.rpartition('-')[1] 
         numm = int(y.rpartition('-')[2])*(-1) 
             
-    jmult = num*numm - ncom2*ncom4
-    mult = num*ncom4 + numm*ncom2
+    mult = num*numm - ncom2*ncom4
+    jmult = num*ncom4 + numm*ncom2
     if mult<0:
         res = f'{jmult}j{mult}'
     else:
