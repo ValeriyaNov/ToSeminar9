@@ -37,7 +37,6 @@ def export_to_xml(user_file_name, data=csv_to_data()):
     return data
 
 
-# работает
 def csv_to_json(jsonFilePath, csvFilePath='phonebook.csv'):
 
     jsonArray = csv_to_data()
