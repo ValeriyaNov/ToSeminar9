@@ -4,7 +4,7 @@ def transl(num):
     x = num
     if x[-1] == 'j':
         num = 0
-        ncom2 = int(x[:-1])
+        ncom2 = float(x[:-1])
 
             
     if x[0]=='-':
@@ -18,20 +18,20 @@ def transl(num):
         ncom1 = x.rpartition('+')[0] 
         ncom1 = ncom1[:-1]
                 
-        ncom2 = int(ncom1)*z
+        ncom2 = float(ncom1)*z
                 
         cc = x.rpartition('+')[1] 
-        num = int(x.rpartition('+')[2])
+        num = float(x.rpartition('+')[2])
         if cc == '-':
             num = (-1)*num
     elif '-' in x:
         ncom1 = x.rpartition('-')[0] 
         ncom1 = ncom1[:-1]
                 
-        ncom2 = int(ncom1)*z
+        ncom2 = float(ncom1)*z
                 
         cc = x.rpartition('-')[1] 
-        num = int(x.rpartition('-')[2])*(-1) 
+        num = float(x.rpartition('-')[2])*(-1) 
             
             
     comp_num = complex(num, ncom2)
