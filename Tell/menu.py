@@ -30,7 +30,7 @@ def answer(msg: types.Message):
 
     if n == '3':
         bot.register_next_step_handler(msg, answer3)
-        bot.send_message(chat_id=msg.from_user.id, text=f'Напишите имя файла, через пробел напишите номер формата экспорта данных: 1 - xml, 2 - json')
+        bot.send_message(chat_id=msg.from_user.id, text=f'Напишите имя файла без расширения, через пробел напишите номер формата экспорта данных: 1 - xml, 2 - json')
     
     if n == '4':
         bot.register_next_step_handler(msg, answer12)
@@ -52,10 +52,9 @@ def answer1(msg: types.Message):
     name = list(msg.text.split())
     
     with open('phonebook.csv', "a", newline='', encoding='utf-8') as bd:
-        f_writ = csv.writer(bd, delimiter = ";", lineterminator="\n" )
-                   
+        f_writ = csv.writer(bd, delimiter = ";", lineterminator="\n" )       
         f_writ.writerow(name)
-        f_writ.writerow(' ')
+        #f_writ.writerow(' ')
     bot.send_message(chat_id=msg.from_user.id, text=f'Данные записаны') 
 
     
@@ -67,10 +66,18 @@ def answer2(msg: types.Message):
         for row in reader:
             if num == '2':
                 item = ', '.join(row)
-                bot.send_message(chat_id=msg.from_user.id, text=f'{item}')
-            if num == '1':
-                for item in row:
+                if len(item) == 1:
+                    continue
+                else:
+                    print(item, type(item), len(item))
                     bot.send_message(chat_id=msg.from_user.id, text=f'{item}')
+            if num == '1':
+                item = row
+            
+                if len(item) == 1:
+                    continue
+                else:
+                    bot.send_message(chat_id=msg.from_user.id, text=f'{item[0]}\n {item[1]}\n {item[2]}\n {item[3]}')
 
 def answer3(msg: types.Message):
     b = list(msg.text.split())
@@ -96,6 +103,7 @@ def answer4(msg: types.Message):
         import_data.write_csv(arr1)
     if num == '2':
         import_data.copy_cont_json(path, namee)
+    bot.send_document(chat_id=msg.from_user.id, document=open(f'Данные успешно перенесены'))
 
 def answer5(msg: types.Message):
     searchname = msg.text
@@ -156,8 +164,8 @@ def answer12(msg: types.Message):
         file.write(bot.download_file(bot.get_file(msg.document.file_id).file_path))
     
     bot.register_next_step_handler(msg, answer4)
-    bot.send_message(chat_id=msg.from_user.id, text='Напишите напишите номер формата экспорта данных: 1 - xml, 2 - json, через пробел имя файла и имя контакта')
-    bot.send_message(chat_id=msg.from_user.id, text='Данные сохранены')
+    bot.send_message(chat_id=msg.from_user.id, text='Напишите напишите номер формата экспорта данных: 1 - xml, 2 - json, через пробел имя файла с указанием расширения и имя контакта')
+    
     # if 'csv' in filename:
     #     arr1 = import_data.copy_cont1(filename)
     #     import_data.write_csv(arr1)
