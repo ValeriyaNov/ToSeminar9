@@ -61,7 +61,7 @@ def logir(message):
     
     with codecs.open('log', 'a', encoding='utf-8') as file:
         file.writelines(
-            f'\n Chat {message.chat.id} User: {message.from_user.first_name} Data: {dtn} Message: {message.text} Answer: {message.text}')
+            f'\n Chat {message.chat.id} User: {message.from_user.first_name} Data: {dtn} Message 1: {message.text}')
 
 
 
@@ -75,7 +75,9 @@ def sum(msg):
     a, b = map(float, msg.text.split())
     answer = a + b
     bot.send_message(chat_id=msg.from_user.id, text=f'Результат сложения {answer}')
-    bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2) 
+    bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
 
 
 def sum_complex_numbers(msg):
@@ -149,6 +151,8 @@ def sum_complex_numbers(msg):
 
     bot.send_message(chat_id=msg.from_user.id, text=f'Результат сложения {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2) 
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
 
 
 
@@ -157,6 +161,8 @@ def subtraction(msg):
     answer = a - b
     bot.send_message(chat_id=msg.from_user.id, text=f'Результат вычитания {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
     
 
 def subtraction_complex_numbers(msg):
@@ -227,19 +233,27 @@ def subtraction_complex_numbers(msg):
         res = f'{jsum}j+{sum1}'
     answer = res
     bot.send_message(chat_id=msg.from_user.id, text=f'Результат вычитания {answer}')
-    bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)  
+    bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2) 
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
 
     
 def devision(msg):
     a, b = map(float, msg.text.split())
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат деления {a / b}')
+    answer = a / b
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат деления {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
     
     
 def mult(msg):
     a, b = map(float, msg.text.split())
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат умножения {a * b}')
+    answer = a * b
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат умножения {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
 
 
 def mult_complex_numbers(msg):
@@ -308,9 +322,11 @@ def mult_complex_numbers(msg):
         res = f'{jmult}j{mult}'
     else:
         res = f'{jmult}j+{mult}'
-            
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат умножения {res}')
+    answer = res      
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат умножения {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
     
 
 def dev_complex_numbers(msg):
@@ -380,9 +396,11 @@ def dev_complex_numbers(msg):
         res = f'{jdev}j{dev}'
     else:
         res = f'{jdev}j+{dev}'
-        
-    bot.send_message(chat_id=msg.from_user.id, text=f'Результат деления {res}')
+    answer = res    
+    bot.send_message(chat_id=msg.from_user.id, text=f'Результат деления {answer}')
     bot.send_message(chat_id=msg.from_user.id, text=m.MESSAGE_2)
+    with codecs.open('log', 'a', encoding='utf-8') as file:
+        file.writelines(f'Message 2 {msg.text} , Answer {answer}')
 
 
 bot.polling()
