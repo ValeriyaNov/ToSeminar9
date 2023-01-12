@@ -2,7 +2,7 @@ import csv
 import export_data
 import import_data
 from telebot import TeleBot, types
-TOKEN = '5615159193:AAFAm4a5YKA3w2EhtlvwS9qkDEzL0jqalUo'
+TOKEN = ''
  
 bot = TeleBot(TOKEN)
 import os
@@ -42,10 +42,7 @@ def answer(msg: types.Message):
     if n == '6':
         bot.register_next_step_handler(msg, answer11)
         bot.send_message(chat_id=msg.from_user.id, text=f'Пришлите файл, с которого необходимо скопировать данные')
-        #bot.register_next_step_handler(msg, answer6)
-        #bot.send_message(chat_id=msg.from_user.id, text=f'Выберете тип файла, из которого будете брать данные 1 - csv, 2 - json и через пробел введите имя файла')
-
-
+        
 
 @bot.message_handler()
 def answer1(msg: types.Message):
@@ -54,7 +51,7 @@ def answer1(msg: types.Message):
     with open('phonebook.csv', "a", newline='', encoding='utf-8') as bd:
         f_writ = csv.writer(bd, delimiter = ";", lineterminator="\n" )       
         f_writ.writerow(name)
-        #f_writ.writerow(' ')
+       
     bot.send_message(chat_id=msg.from_user.id, text=f'Данные записаны') 
 
     
@@ -134,7 +131,7 @@ def answer6(msg: types.Message):
     if num == '2':
         import_data.copy_cont_json1(path)
 
-# Сохраняем в csv
+
 def save_to_csv(new_contacts, file_name = 'phonebook.csv'):
     with open(file_name, "a", newline='', encoding='utf-8') as bd:
         for i in range(len(new_contacts)):
@@ -164,14 +161,7 @@ def answer12(msg: types.Message):
         file.write(bot.download_file(bot.get_file(msg.document.file_id).file_path))
     
     bot.register_next_step_handler(msg, answer4)
-    bot.send_message(chat_id=msg.from_user.id, text='Напишите напишите номер формата экспорта данных: 1 - xml, 2 - json, через пробел имя файла с указанием расширения и имя контакта')
-    
-    # if 'csv' in filename:
-    #     arr1 = import_data.copy_cont1(filename)
-    #     import_data.write_csv(arr1)
-    # if 'json' in filename:
-    #     import_data.copy_cont_json1(filename)   
+    bot.send_message(chat_id=msg.from_user.id, text='Напишите напишите номер формата экспорта данных: 1 - сsv, 2 - json, через пробел имя файла с указанием расширения и имя контакта')
     
 
 bot.polling()
-
