@@ -2,7 +2,7 @@ import csv
 import export_data
 import import_data
 from telebot import TeleBot, types
-TOKEN = ''
+TOKEN = '5615159193:AAFAm4a5YKA3w2EhtlvwS9qkDEzL0jqalUo'
  
 bot = TeleBot(TOKEN)
 import os
@@ -22,7 +22,7 @@ def answer(msg: types.Message):
     if n == '1':
         bot.register_next_step_handler(msg, answer1)
         bot.send_message(chat_id=msg.from_user.id, text=f'Введите имя, фамилию, номер и описание через пробел!')
-        print('Данные сохранены')
+        
 
     if n == '2':
         bot.register_next_step_handler(msg, answer2)
@@ -56,6 +56,7 @@ def answer1(msg: types.Message):
                    
         f_writ.writerow(name)
         f_writ.writerow(' ')
+    bot.send_message(chat_id=msg.from_user.id, text=f'Данные записаны') 
 
     
 def answer2(msg: types.Message):   
