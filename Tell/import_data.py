@@ -51,6 +51,7 @@ def copy_cont_json(n, nn):
     for i in range(len(arr)):
         with open('phonebook.csv', "a", encoding='utf-8') as fil:
             csv_fil = csv.writer(fil, delimiter=';')
+            csv_fil.writerow('')
             csv_fil.writerow(arr[i])
 
 
