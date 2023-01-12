@@ -3,11 +3,6 @@ import json
 import os
 os.chdir(os.path.dirname(__file__))
 
-'''
-Здесь мы считываем и сохраняем, в нашу базу, записи из файла, 
-который указал пользователь
-'''
-
 
 def copy_cont(n, nn):
     path = n
@@ -99,8 +94,6 @@ def copy_cont_json1(n):
             csv_fil.writerow(arr[i])
 
 
-
-
 def write_csv(data):
     for i in range(len(data)):
         with open('phonebook.csv', "a", newline='', encoding='utf-8') as fil:
@@ -108,4 +101,3 @@ def write_csv(data):
             
             csv_fil.writerow(data[i])
             
-    print('Данные успешно записаны')
