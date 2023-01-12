@@ -103,7 +103,7 @@ def answer4(msg: types.Message):
         import_data.write_csv(arr1)
     if num == '2':
         import_data.copy_cont_json(path, namee)
-    bot.send_document(chat_id=msg.from_user.id, document=open(f'Данные успешно перенесены'))
+    bot.send_message(chat_id=msg.from_user.id, text=f'Данные успешно перенесены')
 
 def answer5(msg: types.Message):
     searchname = msg.text
