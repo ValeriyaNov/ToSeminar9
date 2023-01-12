@@ -8,7 +8,10 @@ def csv_to_data(file_name='phonebook.csv'):
         csv_f = csv.reader(f, delimiter=';')
         data = []
         for row in csv_f:
-            data.append(row)
+            if len(row)==1:
+                continue
+            else:
+                data.append(row)
     return data
 
 
